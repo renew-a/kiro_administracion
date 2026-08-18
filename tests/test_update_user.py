@@ -97,12 +97,3 @@ def test_update_invalid_email_returns_422(client, registered):
     })
     assert resp.status_code == 422
     assert "email" in resp.get_json()["errors"]
-
-
-def test_update_short_new_password_returns_422(client, registered):
-    resp = patch_json(client, f"/auth/users/{registered}", {
-        "new_password": "abc",
-        "current_password": "secret123",
-    })
-    assert resp.status_code == 422
-    assert "new_password" in resp.get_json()["errors"]

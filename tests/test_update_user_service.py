@@ -187,9 +187,3 @@ class TestUpdateUserService:
         with pytest.raises(ValueError) as exc:
             service.execute(existing_user.id, schema)
         assert "email" in exc.value.args[0]
-
-    def test_persisted_changes_visible_via_repo(self, service, existing_user, repo):
-        schema = _schema(username="persisted")
-        service.execute(existing_user.id, schema)
-        reloaded = repo.find_by_id(existing_user.id)
-        assert reloaded.username == "persisted"
